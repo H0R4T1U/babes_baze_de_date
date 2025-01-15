@@ -26,12 +26,13 @@ BEGIN
 		SET @contor = @contor + 1
 	END
 END;
-
+GO
 
 SELECT * FROM AccountsTest;
 SELECT * FROM ClientsAccountsTest;
-SELECT * FROM RezervariTerenuriTest;
+SELECT * FROM ClientsTest;
 
-EXEC deleteTableRows ClientAccounts, 10000;
-EXEC deleteTableRows Clients, 10000;
-EXEC deleteTableRows Accounts, 10000;
+
+EXEC deleteTableRows ClientAccounts, 30;
+EXEC deleteTableRows Clients, 30;
+EXEC deleteTableRows Accounts, 30;

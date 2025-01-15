@@ -1,9 +1,11 @@
 GO
 USE Bank
 GO
-
+dbcc checkident ('[Tables]', RESEED, 0)
+dbcc checkident ('[Views]', RESEED, 0)
+dbcc checkident ('[Tests]', RESEED, 0)
 GO
-INSERT INTO Tables(Name) VALUES ('Clients'), ('ClientsAccounts'), ('Accounts');
+INSERT INTO Tables(Name) VALUES ('Clients'), ('ClientAccounts'), ('Accounts');
 SELECT * FROM Tables;
 INSERT INTO Views(Name) VALUES ('View_Client'), ('View_ClientAccounts'), ('View_Accounts');
 SELECT * FROM Views;

@@ -1,11 +1,7 @@
 USE Bank
 GO
 
-/*
-Terenuri - 1 PK, 1 FK -> Client
-Rezervari - 1 PK -> Account 
-RezervariTerenuri - 2 PK -> Client_accounts
-*/
+
 
 GO
 CREATE OR ALTER PROCEDURE insertTableRows 
@@ -57,21 +53,21 @@ BEGIN
 		ELSE IF @tableName = 'ClientAccounts'
 		BEGIN
 			DECLARE @idAccount INT
-			DECLARE cursorRezervari CURSOR FAST_FORWARD FOR
+			DECLARE cursor_ CURSOR FAST_FORWARD FOR
 
 			SELECT Id FROM AccountsTest;
-			OPEN cursorRezervari
-			FETCH NEXT FROM cursorRezervari INTO @idAccount;
+			OPEN cursor_
+			FETCH NEXT FROM cursor_ INTO @idAccount;
 			WHILE @@FETCH_STATUS=0	
 			BEGIN
 				INSERT INTO ClientsAccountsTest(ClientId, AccountId)
 			    VALUES (@idAccount, @idAccount)
 				SET @contor = @contor + 1
-				FETCH NEXT FROM cursorRezervari INTO @idAccount;
+				FETCH NEXT FROM cursor_ INTO @idAccount;
 			END
 
-			CLOSE cursorRezervari;
-			DEALLOCATE cursorRezervari
+			CLOSE cursor_;
+			DEALLOCATE cursor_
 			
 		END
 		SET @contor = @contor + 1
@@ -81,9 +77,9 @@ END
 
 GO
 USE Bank
-EXEC insertTableRows Clients, 10000;
-EXEC insertTableRows Accounts, 10000;
-EXEC insertTableRows ClientAccounts, 10000;
+EXEC insertTableRows Clients, 30;
+EXEC insertTableRows Accounts, 30;
+EXEC insertTableRows ClientAccounts, 30;
 
 SELECT * FROM ClientsTest;
 SELECT * FROM AccountsTest;

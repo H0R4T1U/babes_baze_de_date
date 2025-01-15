@@ -17,6 +17,7 @@ status VARCHAR(20) NOT NULL,
 balance FLOAT
 )
 
+
 CREATE TABLE ClientsAccountsTest
 (ClientId INT FOREIGN KEY REFERENCES ClientsTest(client_id),
 AccountId INT FOREIGN KEY REFERENCES AccountsTest(Id),
@@ -25,6 +26,8 @@ CONSTRAINT pk_ClientsAccountsTest PRIMARY KEY (ClientId, AccountId)
 
 
 
+
+
+DROP TABLE ClientsAccountsTest
 DROP TABLE ClientsTest
 DROP TABLE AccountsTest
-DROP TABLE ClientsAccountsTest

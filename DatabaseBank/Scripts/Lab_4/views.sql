@@ -1,9 +1,5 @@
 USE Bank;
-/*
-Terenuri - 1 PK, 1 FK -> Client
-Rezervari - 1 PK -> Account 
-RezervariTerenuri - 2 PK -> Client_accounts
-*/
+
 GO
 CREATE OR ALTER VIEW View_Client AS
 SELECT client_id, first_name, last_name,email,address
@@ -11,18 +7,25 @@ FROM ClientsTest;
 
 GO
 CREATE OR ALTER VIEW View_ClientAccounts AS
-SELECT a.Id AS AccountId, a.type,a.status,a.balance AS AccountsTest, c.first_name,c.last_name AS ClientsTest
+SELECT a.Id AS AccountId, 
+       a.type, 
+       a.status, 
+       a.balance, 
+       c.first_name, 
+       c.last_name
 FROM AccountsTest a
 INNER JOIN ClientsAccountsTest ca ON a.Id = ca.AccountId
-INNER JOIN ClientsTest c ON ca.ClientId = c.client_id; -- afisam toate rezervarile, clientii, pretul si locatia
+INNER JOIN ClientsTest c ON ca.ClientId = c.client_id;
 
 GO
 CREATE OR ALTER VIEW View_Accounts AS
-SELECT c.branch_id AS ClientTest, COUNT(a.Id) AS TotalAccounts, SUM(a.balance) AS TotalBalance
+SELECT c.branch_id, 
+       COUNT(a.Id) AS TotalAccounts, 
+       SUM(a.balance) AS TotalBalance
 FROM AccountsTest a
 INNER JOIN ClientsAccountsTest ca ON a.Id = ca.AccountId
 INNER JOIN ClientsTest c ON ca.ClientId = c.client_id
-GROUP BY c.branch_id; -- nr de conturi si totalul de bani pentru fiecare branch
+GROUP BY c.branch_id;
 
 GO
 CREATE OR ALTER PROCEDURE viewTableRows
@@ -51,6 +54,10 @@ GO
 SELECT * FROM View_Client
 SELECT * FROM View_ClientAccounts
 SELECT * FROM View_Accounts
+
+EXEC viewTableRows Clients;
+EXEC viewTableRows Accounts;
+EXEC viewTableRows ClientAccounts;
 
 GO
 DROP VIEW View_Client;
